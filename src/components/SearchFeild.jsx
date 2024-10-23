@@ -6,10 +6,11 @@ const SearchFeild = ({
   setSearchValue,
   filteredCountryData,
   setFilteredCountryData,
+  selectedRegion,
+  setSelectedRegion,
+  selectedSubRegion,
+  setSelectedSubRegion,
 }) => {
-  const [selectedRegion, setSelectedRegion] = useState("");
-  const [selectedSubRegion, setSelectedSubRegion] = useState("");
-
   const onSearchValueChange = (e) => {
     const userInputValue = e.target.value.toLowerCase();
     setSearchValue(userInputValue);
@@ -56,10 +57,11 @@ const SearchFeild = ({
             onChange={onSearchValueChange}
           />
         </form>
+
         <select value={selectedRegion} onChange={onRegionChange}>
           <option value="">Filter by Region</option>
 
-          {countryData
+          {filteredCountryData
             .reduce((regions, country) => {
               if (!regions.includes(country.region)) {
                 regions.push(country.region);

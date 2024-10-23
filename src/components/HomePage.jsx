@@ -7,6 +7,9 @@ const HomePage = () => {
   const [filteredCountryData, setFilteredCountryData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const [selectedSubRegion, setSelectedSubRegion] = useState("");
+
   useEffect(() => {
     const fetchCountries = async () => {
       try {
@@ -30,6 +33,10 @@ const HomePage = () => {
         setSearchValue={setSearchValue}
         filteredCountryData={filteredCountryData}
         setFilteredCountryData={setFilteredCountryData}
+        selectedRegion={selectedRegion}
+        setSelectedRegion={setSelectedRegion}
+        selectedSubRegion={selectedSubRegion}
+        setSelectedSubRegion={setSelectedSubRegion}
       />
       {filteredCountryData.map((country, index) => (
         <Card key={index} country={country} />
