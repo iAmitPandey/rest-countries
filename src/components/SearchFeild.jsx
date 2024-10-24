@@ -61,7 +61,7 @@ const SearchFeild = ({
         <select value={selectedRegion} onChange={onRegionChange}>
           <option value="">Filter by Region</option>
 
-          {filteredCountryData
+          {countryData
             .reduce((regions, country) => {
               if (!regions.includes(country.region)) {
                 regions.push(country.region);
