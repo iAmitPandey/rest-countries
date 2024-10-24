@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
-import SearchFeild from "../components/SearchFeild";
+// import SearchFeild from "../components/SearchFeild";
+import UserInput from "../components/UserInput";
+import FilterData from "../components/FilterData";
 
 const HomePage = () => {
   const [countryData, setCountryData] = useState([]);
@@ -35,18 +37,51 @@ const HomePage = () => {
       return countryName.includes(searchValue);
     });
 
+  const onSearchValueChange = (e) => {
+    const userInputValue = e.target.value.toLowerCase();
+    setSearchValue(userInputValue);
+  };
+  const onRegionChange = (e) => {
+    const region = e.target.value;
+    setSelectedRegion(region);
+  };
+
+  const onSubRegionChange = (e) => {
+    const subRegion = e.target.value;
+    setSelectedSubRegion(subRegion);
+  };
+
   return (
     <>
-      <SearchFeild
+      <UserInput
         searchValue={searchValue}
+        onSearchValueChange={onSearchValueChange}
+      />
+      <FilterData
         countryData={countryData}
-        setSearchValue={setSearchValue}
-        filteredCountryData={filteredCountryData} //
         selectedRegion={selectedRegion}
-        setSelectedRegion={setSelectedRegion}
+        onRegionChange={onRegionChange}
+      />
+
+      {/* <FilterData
+        countryData={countryData}
+        selectedRegion={selectedSubRegion}
+        onRegionChange={onSubRegionChange}
+      /> */}
+
+      {/* <FilterData
+        countryData={countryData}
+        selectedRegion={selectedRegion}
+        onRegionChange={onRegionChange}
+      /> */}
+
+      {/* <SearchFeild
+        countryData={countryData}
+        selectedRegion={selectedRegion}
         selectedSubRegion={selectedSubRegion}
         setSelectedSubRegion={setSelectedSubRegion}
-      />
+      /> */}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 p-4 bg-white-50">
         {filteredCountryData.map((country, index) => (
           <Card key={index} country={country} />
