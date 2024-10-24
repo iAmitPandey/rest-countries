@@ -38,9 +38,11 @@ const HomePage = () => {
         selectedSubRegion={selectedSubRegion}
         setSelectedSubRegion={setSelectedSubRegion}
       />
-      {filteredCountryData.map((country, index) => (
-        <Card key={index} country={country} />
-      ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 p-4 bg-white-50">
+        {filteredCountryData.map((country, index) => (
+          <Card key={index} country={country} />
+        ))}
+      </div>
     </>
   );
 };

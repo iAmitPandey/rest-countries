@@ -41,14 +41,14 @@ const SearchFeild = ({
       .filter((country) => {
         // Filter by country name
         const countryName = country.name.common.toLowerCase();
-        return countryName.startsWith(searchValue);
+        return countryName.includes(searchValue);
       });
     setFilteredCountryData(updatedCountries);
   };
 
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex flex-wrap m-4 box-border">
         <form>
           <input
             type="text"
