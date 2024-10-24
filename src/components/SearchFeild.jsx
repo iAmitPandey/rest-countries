@@ -4,8 +4,6 @@ const SearchFeild = ({
   searchValue,
   countryData,
   setSearchValue,
-  filteredCountryData,
-  setFilteredCountryData,
   selectedRegion,
   setSelectedRegion,
   selectedSubRegion,
@@ -14,36 +12,16 @@ const SearchFeild = ({
   const onSearchValueChange = (e) => {
     const userInputValue = e.target.value.toLowerCase();
     setSearchValue(userInputValue);
-    filterCountries(userInputValue, selectedRegion);
   };
 
   const onRegionChange = (e) => {
     const region = e.target.value;
     setSelectedRegion(region);
-    filterCountries(searchValue, region);
   };
 
   const onSubRegionChange = (e) => {
     const subRegion = e.target.value;
     setSelectedSubRegion(subRegion);
-    filterCountries(searchValue, subRegion);
-  };
-
-  const filterCountries = (searchValue, region) => {
-    const updatedCountries = countryData
-      .filter((country) => {
-        // Filter by region if region is selected
-        if (region) {
-          return country.region === region;
-        }
-        return true;
-      })
-      .filter((country) => {
-        // Filter by country name
-        const countryName = country.name.common.toLowerCase();
-        return countryName.includes(searchValue);
-      });
-    setFilteredCountryData(updatedCountries);
   };
 
   return (
@@ -78,7 +56,8 @@ const SearchFeild = ({
         <select value={selectedSubRegion} onChange={onSubRegionChange}>
           <option value="">Filter by Sub-region</option>
 
-          {filteredCountryData
+          {countryData
+            .filter((country) => country.region === selectedRegion)
             .reduce((subRegions, country) => {
               if (!subRegions.includes(country.subregion)) {
                 subRegions.push(country.subregion);
@@ -86,7 +65,6 @@ const SearchFeild = ({
               return subRegions;
             }, [])
             .map((subRegion, index) => (
-              // console.log(subRegion)
               <option value={subRegion} key={index}>
                 {subRegion}
               </option>
