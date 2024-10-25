@@ -9,6 +9,7 @@ const HomePage = () => {
 
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedSubRegion, setSelectedSubRegion] = useState("");
+  const [sortingType, setSortType] = useState("");
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -27,36 +28,32 @@ const HomePage = () => {
   const filteredCountryData = countryData
     .filter((country) => {
       if (selectedRegion) {
-        // if (selectedSubRegion) {
-        //   return country.subRegion === selectedSubRegion;
-        // }
         return country.region === selectedRegion;
       }
       return true;
     })
     .filter((country) => {
       if (selectedSubRegion) {
-        return country.subRegion === selectedSubRegion;
+        return country.subregion === selectedSubRegion;
       }
       return true;
     })
     .filter((country) => {
       const countryName = country.name.common.toLowerCase();
       return countryName.includes(searchValue);
+    })
+    .sort((firstCountry, secondCountry) => {
+      if (sortingType === "Ascending Area") {
+        return firstCountry.area - secondCountry.area;
+      } else if (sortingType === "Descending Area") {
+        return secondCountry.area - firstCountry.area;
+      } else if (sortingType === "Ascending Population") {
+        return firstCountry.population - secondCountry.population;
+      } else if (sortingType === "Descending Population") {
+        return secondCountry.population - firstCountry.population;
+      }
+      return true;
     });
-
-  // const filteredCountryData = countryData.filter((country) => {
-  //   const countryName = country.name.common.toLowerCase();
-  //   const matchesRegion = selectedRegion
-  //     ? country.region === selectedRegion
-  //     : true;
-  //   const matchesSubRegion = selectedSubRegion
-  //     ? country.subRegion === selectedSubRegion
-  //     : true;
-  //   const matchesSearch = countryName.includes(searchValue.toLowerCase());
-
-  //   return matchesRegion && matchesSubRegion && matchesSearch;
-  // });
 
   const onSearchValueChange = (e) => {
     const userInputValue = e.target.value.toLowerCase();
@@ -71,6 +68,11 @@ const HomePage = () => {
   const onSubRegionChange = (e) => {
     const subRegion = e.target.value;
     setSelectedSubRegion(subRegion);
+  };
+
+  const onSelectedOrderChange = (e) => {
+    const selectOrder = e.target.value;
+    setSortType(selectOrder);
   };
 
   const byRegion = countryData.reduce((regions, country) => {
@@ -119,12 +121,12 @@ const HomePage = () => {
         placeHolder="Filter by Sub Region"
       />
 
-      {/* <FilterData
+      <FilterData
         countryData={sortType}
-        selectedRegion={selectedRegion}
-        onRegionChange={onRegionChange}
+        selectedRegion={sortingType}
+        onRegionChange={onSelectedOrderChange}
         placeHolder="Sort by"
-      /> */}
+      />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 p-4 bg-white-50">
         {filteredCountryData.map((country, index) => (
