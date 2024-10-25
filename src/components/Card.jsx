@@ -1,16 +1,17 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
 const Card = ({ country }) => {
-  // console.log(props.country.name.common);
   return (
     <>
       <div className="flex flex-col ">
         <div className="h-[200px] w-full flex">
-          <img
-            src={country.flags.png}
-            alt=""
-            className="h-full w-full rounded-t-md object-fill"
-          />
+          <Link to={"/detail-page/" + country.name.common}>
+            <img
+              src={country.flags.png}
+              alt={country.name.common}
+              className="h-full w-full rounded-t-md object-fill"
+            />
+          </Link>
         </div>
         <ul>
           <li>
