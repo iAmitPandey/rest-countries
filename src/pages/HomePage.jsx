@@ -41,6 +41,7 @@ const HomePage = () => {
     .filter((country) => {
       const countryName = country.name.common.toLowerCase();
       return countryName.includes(searchValue);
+      // return countryName.startsWith(searchValue);
     })
     .sort((firstCountry, secondCountry) => {
       if (sortingType === "Ascending Area") {
