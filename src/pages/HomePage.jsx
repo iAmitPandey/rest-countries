@@ -63,6 +63,7 @@ const HomePage = () => {
 
   const onRegionChange = (e) => {
     const region = e.target.value;
+    setSelectedSubRegion("");
     setSelectedRegion(region);
   };
 
