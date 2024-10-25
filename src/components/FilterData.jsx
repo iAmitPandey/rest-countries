@@ -5,18 +5,20 @@ const FilterDate = ({ countryData, selectedRegion, onRegionChange }) => {
     <>
       <select value={selectedRegion} onChange={onRegionChange}>
         <option value="">Filter by Region</option>
-        {countryData //
-          .reduce((regions, country) => {
-            if (!regions.includes(country.region)) {
-              regions.push(country.region);
-            }
-            return regions;
-          }, [])
-          .map((region) => (
+        {
+          // countryData //
+          //   .reduce((regions, country) => {
+          //     if (!regions.includes(country.region)) {
+          //       regions.push(country.region);
+          //     }
+          //     return regions;
+          //   }, [])
+          countryData.map((region) => (
             <option value={region} key={region}>
               {region}
             </option>
-          ))}
+          ))
+        }
       </select>
     </>
   );

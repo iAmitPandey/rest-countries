@@ -51,20 +51,40 @@ const HomePage = () => {
     setSelectedSubRegion(subRegion);
   };
 
+  const byRegion = countryData //
+    .reduce((regions, country) => {
+      if (!regions.includes(country.region)) {
+        regions.push(country.region);
+      }
+      return regions;
+    }, []);
+
+  const bySubRegion = countryData
+    .filter((country) => {
+      return selectedRegion ? country.region === selectedRegion : true;
+    })
+    .reduce((subRegions, country) => {
+      if (!subRegions.includes(country.subregion)) {
+        subRegions.push(country.subregion);
+      }
+      return subRegions;
+    }, []);
+
   return (
     <>
       <UserInput
         searchValue={searchValue}
         onSearchValueChange={onSearchValueChange}
       />
+
       <FilterData
-        countryData={countryData}
+        countryData={byRegion}
         selectedRegion={selectedRegion}
         onRegionChange={onRegionChange}
       />
 
       {/* <FilterData
-        countryData={countryData}
+        countryData={bySubRegion}
         selectedRegion={selectedSubRegion}
         onRegionChange={onSubRegionChange}
       /> */}
