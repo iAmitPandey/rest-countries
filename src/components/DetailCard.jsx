@@ -1,6 +1,15 @@
-const DetailCard = ({ country }) => {
-  console.log(Object.values(country[0]?.languages));
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
+const DetailCard = ({ country }) => {
+  // useEffect(()=>{
+
+  // })
+  const countryFinder = async (key) => {
+    const res = await fetch(`https://restcountries.com/v3.1/alpha/${key}`);
+    const data = await res.json();
+    return data[0].cca3;
+  };
   return (
     <>
       <div>
@@ -20,8 +29,34 @@ const DetailCard = ({ country }) => {
         <ul>
           <li>Top Level Domain: {country[0]?.tld}</li>
           <li>Currencies: {Object.values(country[0]?.currencies)[0].name}</li>
-          {/* <li>Languages: {Object.values(country[0]?.languages)}</li> */}
+          <li>
+            Languages:
+            {Object.values(country[0]?.languages).map((language, index) => (
+              <span key={index}>
+                {language}
+                {index < Object.values(country[0]?.languages).length - 1
+                  ? ", "
+                  : ""}
+              </span>
+            ))}
+          </li>
         </ul>
+
+        <div>
+          Border Countries:
+          <br />
+          {country[0]?.borders?.map((negibhour, index) => (
+            <Link to={"/detail-page/" + negibhour} key={negibhour}>
+              <button
+                key={index}
+                className="mr-2 border solid"
+                onClick={() => countryFinder(negibhour)}
+              >
+                {negibhour}
+              </button>
+            </Link>
+          ))}
+        </div>
       </div>
     </>
   );

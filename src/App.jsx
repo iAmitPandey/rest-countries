@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import CountryDetail from "./components/CountryDetail";
+import CountryDetailPage from "./pages/CountryDetailPage";
 import Navbar from "./components/Navbar";
 
 const router = createBrowserRouter([
@@ -10,7 +10,7 @@ const router = createBrowserRouter([
   },
   {
     path: `/detail-page/:name`,
-    element: <CountryDetail />,
+    element: <CountryDetailPage />,
   },
 ]);
 

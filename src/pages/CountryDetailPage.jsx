@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import Loader from "./Loader";
-import DetailCard from "./DetailCard";
+import { Link, useParams } from "react-router-dom";
+import Loader from "../components/Loader";
+import DetailCard from "../components/DetailCard";
 
 const CountryDetail = () => {
   const [country, setCountry] = useState([]);
@@ -27,7 +27,9 @@ const CountryDetail = () => {
   } else {
     return (
       <>
-        <button>back</button>
+        <Link to="/">
+          <button className="mr-2 border solid">back</button>
+        </Link>
         <DetailCard country={country} />
       </>
     );
