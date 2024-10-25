@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
-import DetailCard from "../components/DetailCard";
+import DetailCard from "../components/cards/DetailCard";
 
 const CountryDetail = () => {
   const [country, setCountry] = useState([]);
@@ -11,7 +11,9 @@ const CountryDetail = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        let res = await fetch(`https://restcountries.com/v3.1/name/${name}`);
+        let res = await fetch(
+          `https://restcountries.com/v3.1/name/${name}/?fullText=true`
+        );
         let data = await res.json();
         setCountry(data);
         setLoader(false);
@@ -21,7 +23,7 @@ const CountryDetail = () => {
     };
 
     fetchCountries();
-  }, []);
+  }, [name]);
   if (loader) {
     return <Loader />;
   } else {

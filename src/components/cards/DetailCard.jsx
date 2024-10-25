@@ -1,15 +1,31 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const DetailCard = ({ country }) => {
-  // useEffect(()=>{
-
-  // })
-  const countryFinder = async (key) => {
-    const res = await fetch(`https://restcountries.com/v3.1/alpha/${key}`);
+  const [borderCountryNames, setBorderCountryNames] = useState({});
+  const fetchCountryName = async (code) => {
+    const res = await fetch(`https://restcountries.com/v3.1/alpha/${code}`);
     const data = await res.json();
-    return data[0].cca3;
+    return data[0]?.name.common;
   };
+
+  const navigate = useNavigate();
+  const handleNeighborClick = (neighbor) => {
+    navigate(`/detail-page/${neighbor}`);
+  };
+  // Fetch the names for all border countries
+  useEffect(() => {
+    const fetchBorderNames = async () => {
+      const names = {};
+      if (country[0]?.borders) {
+        for (let borderCode of country[0].borders) {
+          names[borderCode] = await fetchCountryName(borderCode);
+        }
+      }
+      setBorderCountryNames(names);
+    };
+    fetchBorderNames();
+  }, [country]);
   return (
     <>
       <div>
@@ -45,16 +61,16 @@ const DetailCard = ({ country }) => {
         <div>
           Border Countries:
           <br />
-          {country[0]?.borders?.map((negibhour, index) => (
-            <Link to={"/detail-page/" + negibhour} key={negibhour}>
-              <button
-                key={index}
-                className="mr-2 border solid"
-                onClick={() => countryFinder(negibhour)}
-              >
-                {negibhour}
-              </button>
-            </Link>
+          {country[0]?.borders?.map((neighborCode) => (
+            <button
+              key={neighborCode}
+              className="mr-2 border solid"
+              onClick={() =>
+                handleNeighborClick(borderCountryNames[neighborCode])
+              }
+            >
+              {borderCountryNames[neighborCode]}
+            </button>
           ))}
         </div>
       </div>
