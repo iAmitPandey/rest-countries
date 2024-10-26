@@ -28,7 +28,7 @@ const DetailCard = ({ country }) => {
   }, [country]);
   return (
     <>
-      <div>
+      <div className="dark:bg-slate-800 dark:text-white">
         <img src={country[0]?.flags.png} alt={country[0]?.name.common} />
         <h1>{country[0]?.name.common}</h1>
         <ul>
