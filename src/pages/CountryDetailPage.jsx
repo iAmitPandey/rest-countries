@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import DetailCard from "../components/cards/DetailCard";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 const CountryDetail = () => {
   const [country, setCountry] = useState([]);
@@ -31,9 +32,12 @@ const CountryDetail = () => {
   } else {
     return (
       <>
-        <div className=" dark:bg-slate-800 dark:text-white">
+        <div className=" dark:bg-slate-900 dark:text-white h-screen">
           <Link to="/">
-            <button className="mr-2 border solid">back</button>
+            <button className=" ml-6 my-8 w-1/3  md:w-1/6 md:h-10  dark:bg-slate-800 rounded-sm">
+              <IoArrowBackOutline className="inline mr-2 md:mr-6" />
+              <span className="text-sm">Back</span>
+            </button>
           </Link>
           <DetailCard country={country} />
         </div>

@@ -104,37 +104,39 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="flex p-4 flex-col items-start box-border dark:bg-slate-900  dark:text-white ">
-        <UserInput
-          searchValue={searchValue}
-          onSearchValueChange={onSearchValueChange}
-        />
+      <div className="dark:bg-slate-900  dark:text-white">
+        <div className="grid p-4 grid-cols-1 items-center  box-border dark:bg-slate-900  dark:text-white md:p-8 md:grid md:grid-cols-4  md:gap-2 xl:p-12">
+          <UserInput
+            searchValue={searchValue}
+            onSearchValueChange={onSearchValueChange}
+          />
 
-        <FilterData
-          countryData={byRegion}
-          selectedRegion={selectedRegion}
-          onRegionChange={onRegionChange}
-          placeHolder="Filter by Region"
-        />
+          <FilterData
+            countryData={byRegion}
+            selectedRegion={selectedRegion}
+            onRegionChange={onRegionChange}
+            placeHolder="Filter by Region"
+          />
 
-        <FilterData
-          countryData={bySubRegion}
-          selectedRegion={selectedSubRegion}
-          onRegionChange={onSubRegionChange}
-          placeHolder="Filter by Sub Region"
-        />
+          <FilterData
+            countryData={bySubRegion}
+            selectedRegion={selectedSubRegion}
+            onRegionChange={onSubRegionChange}
+            placeHolder="Filter by Sub Region"
+          />
 
-        <FilterData
-          countryData={sortType}
-          selectedRegion={sortingType}
-          onRegionChange={onSelectedOrderChange}
-          placeHolder="Sort by"
-        />
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 p-4 bg-white-50 dark:bg-slate-900">
-        {filteredCountryData.map((country, index) => (
-          <Card key={index} country={country} />
-        ))}
+          <FilterData
+            countryData={sortType}
+            selectedRegion={sortingType}
+            onRegionChange={onSelectedOrderChange}
+            placeHolder="Sort by"
+          />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10  p-4 md:p-8 bg-white-50 dark:bg-slate-900">
+          {filteredCountryData.map((country, index) => (
+            <Card key={index} country={country} />
+          ))}
+        </div>
       </div>
     </>
   );
