@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Card = ({ country }) => {
   return (
     <>
-      <div className="flex flex-col dark:bg-slate-800 dark:text-white">
+      <div className="flex flex-col bg-white dark:bg-slate-800 dark:text-white">
         <div className="h-[200px] w-full">
           <Link to={"/detail-page/" + country.name.common}>
             <img

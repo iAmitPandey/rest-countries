@@ -32,9 +32,9 @@ const CountryDetail = () => {
   } else {
     return (
       <>
-        <div className=" dark:bg-slate-900 dark:text-white h-screen">
+        <div className=" dark:bg-slate-900 bg-slate-100 dark:text-white h-screen">
           <Link to="/">
-            <button className=" ml-6 my-8 w-1/3  md:w-1/6 md:h-10  dark:bg-slate-800 rounded-sm">
+            <button className=" ml-6 my-8 w-1/3 bg-white md:mx-12  md:w-1/6 md:h-10  dark:bg-slate-800 rounded-sm">
               <IoArrowBackOutline className="inline mr-2 md:mr-6" />
               <span className="text-sm">Back</span>
             </button>
