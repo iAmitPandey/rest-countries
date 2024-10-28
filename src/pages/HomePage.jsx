@@ -3,6 +3,10 @@ import Card from "../components/cards/Card";
 import UserInput from "../components/UserInput";
 import FilterData from "../components/FilterData";
 
+import { countryFilter } from "../utils/countryFilter";
+
+import Loader from "../components/Loader";
+
 const HomePage = () => {
   const [countryData, setCountryData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -10,51 +14,27 @@ const HomePage = () => {
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedSubRegion, setSelectedSubRegion] = useState("");
   const [sortingType, setSortType] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchCountries = async () => {
+      setLoading(true)
       try {
         let res = await fetch("https://restcountries.com/v3.1/all");
         let data = await res.json();
         setCountryData(data);
       } catch (error) {
         console.error("Error fetching country data:", error);
+      }finally{
+        setLoading(false)
       }
     };
 
     fetchCountries();
   }, []);
 
-  const filteredCountryData = countryData
-    .filter((country) => {
-      if (selectedRegion) {
-        return country.region === selectedRegion;
-      }
-      return true;
-    })
-    .filter((country) => {
-      if (selectedSubRegion) {
-        return country.subregion === selectedSubRegion;
-      }
-      return true;
-    })
-    .filter((country) => {
-      const countryName = country.name.common.toLowerCase();
-      return countryName.includes(searchValue);
-      // return countryName.startsWith(searchValue);
-    })
-    .sort((firstCountry, secondCountry) => {
-      if (sortingType === "Ascending Area") {
-        return firstCountry.area - secondCountry.area;
-      } else if (sortingType === "Descending Area") {
-        return secondCountry.area - firstCountry.area;
-      } else if (sortingType === "Ascending Population") {
-        return firstCountry.population - secondCountry.population;
-      } else if (sortingType === "Descending Population") {
-        return secondCountry.population - firstCountry.population;
-      }
-      return true;
-    });
+  const filteredCountryData = countryFilter(countryData, selectedRegion, selectedSubRegion, searchValue, sortingType)
+  console.log("filteredCountryData",filteredCountryData)
 
   const onSearchValueChange = (e) => {
     const userInputValue = e.target.value.toLowerCase();
@@ -125,18 +105,29 @@ const HomePage = () => {
             placeHolder="Filter by Sub Region"
           />
 
-          <FilterData
+        <FilterData
+          countryData={sortType}
+          selectedRegion={sortingType}
+          onRegionChange={onSelectedOrderChange}
+          placeHolder="Sort by"
+        />
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 p-4 bg-white-50 dark:bg-slate-900">
+        {loading ? <Loader /> : filteredCountryData.map((country, index) => (
+          <Card key={index} country={country} />
+        ))}
+          {/* <FilterData
             countryData={sortType}
             selectedRegion={sortingType}
             onRegionChange={onSelectedOrderChange}
             placeHolder="Sort by"
-          />
+          /> */}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10  p-4 md:p-8 bg-white-50 dark:bg-slate-900">
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10  p-4 md:p-8 bg-white-50 dark:bg-slate-900">
           {filteredCountryData.map((country, index) => (
             <Card key={index} country={country} />
           ))}
-        </div>
+        </div> */}
       </div>
     </>
   );
